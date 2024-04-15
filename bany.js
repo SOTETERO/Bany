@@ -1,9 +1,10 @@
-import { Client, GatewayIntentBits } from "discord.js";
-import express from "express";
+import { Client, GatewayIntentBits, User } from "discord.js";
 
 import { token } from "./config.js";
 
-const client = new Client({
+import AttendanceCheck from "./commands/AttendanceCheck.js";
+
+const bany = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
@@ -11,12 +12,22 @@ const client = new Client({
   ],
 });
 
-client.on("ready", () => console.log(`${client.user.tag} 에 로그인됨`));
+bany.on("ready", () => console.log(`${bany.user.tag} 에 로그인됨`));
 
-client.on("messageCreate", (msg) => {
+bany.on("messageCreate", (msg) => {
   if (msg.author.bot) return;
 
   console.log(msg.channel.id);
 });
 
-client.login(token);
+bany.on("interactionCreate", async (interaction) => {
+  if (!interaction.isCommand()) return;
+
+  const { commandName, user } = interaction;
+
+  if (commandName == "출석체크") {
+    await interaction.reply(`User: ${user.username}#${user.discriminator}`);
+  }
+});
+
+bany.login(token);
