@@ -22,7 +22,11 @@ const CreateSicbo = async (channel_id) => {
   axios
     .post(url, data, { headers })
     .then((response) => {
-      sicboGames.push({ channel_id: channel_id, message_id: response.data.id });
+      sicboGames.push({
+        channel_id: channel_id,
+        message_id: response.data.id,
+        betting: [],
+      });
     })
     .catch((error) => {
       console.log("Error:", error.message);

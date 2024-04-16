@@ -4,6 +4,7 @@ import { token } from "./config.js";
 
 import CreateSicbo from "./commands/sicbo/createSicbo.js";
 import UpdateSicboGames from "./commands/sicbo/updateSicbo.js";
+import Betting from "./commands/sicbo/betting.js";
 
 const bany = new Client({
   intents: [
@@ -35,13 +36,8 @@ bany.on("interactionCreate", async (interaction) => {
       CreateSicbo(channelId);
     }
   } else if (interaction.isButton()) {
-    if (customId == "click") {
-      console.log("호출");
-      //await interaction.reply(`돈 넣음`);
-    }
-
     if ("sicbo_odd" == customId.substr(0, 9)) {
-      console.log(customId.substr(10));
+      Betting(channelId, customId.substr(10), user, 1);
     } else if ("sicbo_even" == customId.substr(0, 10)) {
       console.log(customId.substr(11));
     }

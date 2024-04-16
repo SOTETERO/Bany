@@ -4,15 +4,21 @@ import axios from "axios";
 
 let startTime = performance.now();
 let remainingTime = performance.now();
+let gameTime = 20;
+
+let dices = [1, 1, 1];
+let sum = 3;
 
 const UpdateSicboGames = async () => {
-  remainingTime = parseInt(60 - (performance.now() - startTime) / 1000);
+  remainingTime = parseInt(gameTime - (performance.now() - startTime) / 1000);
 
   sicboGames.forEach((sicboGame) => {
     UpdateSicbo(sicboGame);
   });
 
-  console.log("test");
+  if (remainingTime <= 0) {
+    ResetSicbo();
+  }
 };
 
 const UpdateSicbo = async (sicboGame) => {
@@ -25,11 +31,26 @@ const UpdateSicbo = async (sicboGame) => {
     Authorization: `Bot ${TOKEN}`,
     "Content-Type": "application/json",
   };
+
   const data = {
     embeds: [
       {
         title: ":game_die: 다이 사이 :game_die:",
-        description: `남은 시간 : ${remainingTime}`,
+        fields: [
+          {
+            name: `남은 시간 : `,
+            value: `${remainingTime}`,
+            inline: true,
+          },
+          {
+            name: `DICE`,
+            value: `${dices[0]} ${dices[1]} ${dices[2]}`,
+          },
+          {
+            name: `합`,
+            value: `${sum}`,
+          },
+        ],
       },
     ],
     components: [
@@ -59,6 +80,17 @@ const UpdateSicbo = async (sicboGame) => {
     .catch((error) => {
       console.log("Error:", error.message);
     });
+};
+
+const ResetSicbo = async () => {
+  startTime = performance.now();
+  remainingTime = performance.now();
+
+  dices[0] = Math.floor(Math.random() * 6 + 1);
+  dices[1] = Math.floor(Math.random() * 6 + 1);
+  dices[2] = Math.floor(Math.random() * 6 + 1);
+
+  sum = dices[0] + dices[1] + dices[2];
 };
 
 export default UpdateSicboGames;
