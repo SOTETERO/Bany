@@ -25,6 +25,7 @@ const CreateSicbo = async (channel_id) => {
       sicboGames.push({
         channel_id: channel_id,
         message_id: response.data.id,
+        lastBetting: [],
         betting: [],
       });
     })

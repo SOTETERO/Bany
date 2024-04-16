@@ -36,10 +36,11 @@ bany.on("interactionCreate", async (interaction) => {
       CreateSicbo(channelId);
     }
   } else if (interaction.isButton()) {
-    if ("sicbo_odd" == customId.substr(0, 9)) {
-      Betting(channelId, customId.substr(10), user, 1);
-    } else if ("sicbo_even" == customId.substr(0, 10)) {
-      console.log(customId.substr(11));
+    if ("sicboBet" == customId.substr(0, 8)) {
+      let betType = customId.substr(9, 2);
+      let message_id = customId.substr(12);
+
+      Betting(channelId, message_id, user.globalName, betType);
     }
   }
 });
