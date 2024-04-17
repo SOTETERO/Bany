@@ -2,9 +2,9 @@ import { sicboGames } from "./sicboGame.js";
 
 import axios from "axios";
 
-const CreateSicbo = async (channel_id) => {
+const CreateSicbo = async (channelId) => {
   const TOKEN = process.env.TOKEN;
-  const url = `https://discord.com/api/v10/channels/${channel_id}/messages`;
+  const url = `https://discord.com/api/v10/channels/${channelId}/messages`;
 
   const headers = {
     Authorization: `Bot ${TOKEN}`,
@@ -23,8 +23,8 @@ const CreateSicbo = async (channel_id) => {
     .post(url, data, { headers })
     .then((response) => {
       sicboGames.push({
-        channel_id: channel_id,
-        message_id: response.data.id,
+        channelId: channelId,
+        messageId: response.data.id,
         lastBetting: [],
         betting: [],
       });

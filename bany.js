@@ -5,6 +5,7 @@ import { token } from "./config.js";
 import CreateSicbo from "./commands/sicbo/createSicbo.js";
 import UpdateSicboGames from "./commands/sicbo/updateSicbo.js";
 import Betting from "./commands/sicbo/betting.js";
+import CreateUser from "./commands/user/createUser.js";
 
 const bany = new Client({
   intents: [
@@ -30,6 +31,8 @@ bany.on("interactionCreate", async (interaction) => {
   const { commandName, user, customId, channelId } = interaction;
   if (interaction.isCommand()) {
     if (commandName == "출석체크") {
+      CreateUser(user);
+
       await interaction.reply(`User: ${user.username}#${user.discriminator}`);
     } else if (commandName == "다이사이") {
       await interaction.reply(`다이사이 보드판을 만듭니다.`);
@@ -40,7 +43,7 @@ bany.on("interactionCreate", async (interaction) => {
       let betType = customId.substr(9, 2);
       let message_id = customId.substr(12);
 
-      Betting(channelId, message_id, user.globalName, betType);
+      Betting(channelId, message_id, user.id, betType);
     }
   }
 });

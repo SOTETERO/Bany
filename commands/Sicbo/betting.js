@@ -1,22 +1,31 @@
+import GetUser from "../user/getUser.js";
+import { userDatas } from "../user/userDatas.js";
 import { sicboGames } from "./sicboGame.js";
 
-const Betting = (channel_id, message_id, user_id, type) => {
+const Betting = (channelId, messageId, userId, type) => {
   const gameInfo = sicboGames.find(
-    (game) => game.channel_id === channel_id && game.message_id === message_id
+    (game) => game.channelId === channelId && game.messageId === messageId
   );
 
   let bettingInfo = gameInfo.betting.find(
-    (user) => user.user_id === user_id && user.type === type
+    (user) => user.userId === userId && user.type === type
   );
 
   if (typeof bettingInfo == "undefined") {
-    bettingInfo = { user_id: user_id, type: type, betting: 0 };
+    bettingInfo = { userId: userId, type: type, betting: 0 };
     gameInfo.betting.push(bettingInfo);
   }
 
-  bettingInfo.betting += 1000;
+  const user = GetUser(userId);
 
-  console.log(gameInfo);
+  if (user.coin - 1000 >= 0) {
+    user.coin -= 1000;
+    bettingInfo.betting += 1000;
+
+    console.log(`user.globalName : 돈 부족`);
+  }
+
+  console.log(userDatas);
 };
 
 export default Betting;

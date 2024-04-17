@@ -22,10 +22,10 @@ const UpdateSicboGames = async () => {
 };
 
 const UpdateSicbo = async (sicboGame) => {
-  const { channel_id, message_id } = sicboGame;
+  const { channelId, messageId } = sicboGame;
 
   const TOKEN = process.env.TOKEN;
-  const url = `https://discord.com/api/v10/channels/${channel_id}/messages/${message_id}`;
+  const url = `https://discord.com/api/v10/channels/${channelId}/messages/${messageId}`;
 
   const headers = {
     Authorization: `Bot ${TOKEN}`,
@@ -34,26 +34,26 @@ const UpdateSicbo = async (sicboGame) => {
 
   let lastGameValue = "";
   sicboGame.lastBetting.forEach((bet) => {
-    const user_id = bet.user_id;
+    const userId = bet.userId;
     const betting = bet.betting;
     const obtained = bet.obtained;
 
-    lastGameValue += `${user_id} : ${betting} => ${obtained}\n`;
+    lastGameValue += `${userId} : ${betting} => ${obtained}\n`;
   });
 
   let obb_value = "";
   let even_value = "";
   sicboGame.betting.forEach((bet) => {
-    const user_id = bet.user_id;
+    const userId = bet.userId;
     const type = bet.type;
     const betting = bet.betting;
 
     switch (type) {
       case "01":
-        obb_value += `${user_id} : ${betting}\n`;
+        obb_value += `${userId} : ${betting}\n`;
         break;
       case "02":
-        even_value += `${user_id} : ${betting}\n`;
+        even_value += `${userId} : ${betting}\n`;
         break;
       default:
     }
@@ -100,13 +100,13 @@ const UpdateSicbo = async (sicboGame) => {
             type: 2,
             label: "홀",
             style: 1,
-            custom_id: `sicboBet_${"01"}_${message_id}`,
+            custom_id: `sicboBet_${"01"}_${messageId}`,
           },
           {
             type: 2,
             label: "짝",
             style: 1,
-            custom_id: `sicboBet_${"02"}_${message_id}`,
+            custom_id: `sicboBet_${"02"}_${messageId}`,
           },
         ],
       },
@@ -136,11 +136,11 @@ const ResetSicbo = async () => {
 
     game.betting.forEach((bet) => {
       let bettingInfo = game.lastBetting.find(
-        (user) => user.user_id === bet.user_id
+        (user) => user.userId === bet.userId
       );
 
       if (typeof bettingInfo == "undefined") {
-        bettingInfo = { user_id: bet.user_id, betting: 0, obtained: 0 };
+        bettingInfo = { userId: bet.userId, betting: 0, obtained: 0 };
         game.lastBetting.push(bettingInfo);
       }
 
