@@ -43,7 +43,7 @@ bany.on("interactionCreate", async (interaction) => {
       let betType = customId.substr(9, 2);
       let message_id = customId.substr(12);
 
-      Betting(channelId, message_id, user.id, betType);
+      Betting(channelId, message_id, user, betType);
     }
   }
 });

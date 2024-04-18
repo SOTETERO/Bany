@@ -1,3 +1,5 @@
+import GetUser from "../user/getUser.js";
+import { userDatas } from "../user/userDatas.js";
 import { sicboGames } from "./sicboGame.js";
 
 import axios from "axios";
@@ -34,26 +36,26 @@ const UpdateSicbo = async (sicboGame) => {
 
   let lastGameValue = "";
   sicboGame.lastBetting.forEach((bet) => {
-    const userId = bet.userId;
+    const globalName = bet.globalName;
     const betting = bet.betting;
     const obtained = bet.obtained;
 
-    lastGameValue += `${userId} : ${betting} => ${obtained}\n`;
+    lastGameValue += `${globalName} : ${betting} => ${obtained}\n`;
   });
 
   let obb_value = "";
   let even_value = "";
   sicboGame.betting.forEach((bet) => {
-    const userId = bet.userId;
+    const globalName = bet.globalName;
     const type = bet.type;
     const betting = bet.betting;
 
     switch (type) {
       case "01":
-        obb_value += `${userId} : ${betting}\n`;
+        obb_value += `${globalName} : ${betting}\n`;
         break;
       case "02":
-        even_value += `${userId} : ${betting}\n`;
+        even_value += `${globalName} : ${betting}\n`;
         break;
       default:
     }
@@ -121,7 +123,7 @@ const UpdateSicbo = async (sicboGame) => {
     });
 };
 
-const ResetSicbo = async () => {
+const ResetSicbo = () => {
   startTime = performance.now();
   remainingTime = performance.now();
 
@@ -140,7 +142,12 @@ const ResetSicbo = async () => {
       );
 
       if (typeof bettingInfo == "undefined") {
-        bettingInfo = { userId: bet.userId, betting: 0, obtained: 0 };
+        bettingInfo = {
+          userId: bet.userId,
+          globalName: bet.globalName,
+          betting: 0,
+          obtained: 0,
+        };
         game.lastBetting.push(bettingInfo);
       }
 
@@ -159,6 +166,11 @@ const ResetSicbo = async () => {
           break;
         default:
       }
+    });
+
+    game.lastBetting.forEach((bet) => {
+      const userData = GetUser(bet.userId);
+      userData.coin += bet.obtained;
     });
 
     game.betting = [];

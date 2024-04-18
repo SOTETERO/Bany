@@ -2,21 +2,26 @@ import GetUser from "../user/getUser.js";
 import { userDatas } from "../user/userDatas.js";
 import { sicboGames } from "./sicboGame.js";
 
-const Betting = (channelId, messageId, userId, type) => {
+const Betting = (channelId, messageId, userInfo, type) => {
   const gameInfo = sicboGames.find(
     (game) => game.channelId === channelId && game.messageId === messageId
   );
 
   let bettingInfo = gameInfo.betting.find(
-    (user) => user.userId === userId && user.type === type
+    (user) => user.userId === userInfo.id && user.type === type
   );
 
   if (typeof bettingInfo == "undefined") {
-    bettingInfo = { userId: userId, type: type, betting: 0 };
+    bettingInfo = {
+      userId: userInfo.id,
+      globalName: userInfo.globalName,
+      type: type,
+      betting: 0,
+    };
     gameInfo.betting.push(bettingInfo);
   }
 
-  const user = GetUser(userId);
+  const user = GetUser(bettingInfo.userId);
 
   if (user.coin - 1000 >= 0) {
     user.coin -= 1000;

@@ -1,10 +1,14 @@
 import { userDatas } from "./userDatas.js";
 
+/**
+ * 유저 데이터를 가져옵니다.
+ * @param {*} id 유저 ID
+ * @returns 유저 데이터
+ */
 const GetUser = (id) => {
   const userData = userDatas.find((user) => user.id === id);
 
   if (typeof userData == "undefined") {
-    console.log("등록되지 않은 유저 호출");
     return "undefined";
   }
   return userData;
