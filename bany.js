@@ -1,11 +1,13 @@
 import { Client, GatewayIntentBits, User } from "discord.js";
 
-import { token } from "./config.js";
-
 import CreateSicbo from "./commands/sicbo/createSicbo.js";
 import UpdateSicboGames from "./commands/sicbo/updateSicbo.js";
 import Betting from "./commands/sicbo/betting.js";
-import CreateUser from "./commands/user/createUser.js";
+import RegisterUser from "./commands/user/registerUser.js";
+import AttendanceUser from "./commands/user/attendanceUser.js";
+import { TOKEN } from "./env.js";
+import Begging from "./commands/user/begging.js";
+import BalanceInquiry from "./commands/user/balanceInquiry.js";
 
 const bany = new Client({
   intents: [
@@ -30,10 +32,14 @@ bany.on("messageCreate", (msg) => {
 bany.on("interactionCreate", async (interaction) => {
   const { commandName, user, customId, channelId } = interaction;
   if (interaction.isCommand()) {
-    if (commandName == "출석체크") {
-      CreateUser(user);
-
-      await interaction.reply(`User: ${user.username}#${user.discriminator}`);
+    if (commandName == "회원가입") {
+      await RegisterUser(interaction);
+    } else if (commandName == "출석체크") {
+      await AttendanceUser(interaction);
+    } else if (commandName == "구걸") {
+      await Begging(interaction);
+    } else if (commandName == "잔액조회") {
+      await BalanceInquiry(interaction);
     } else if (commandName == "다이사이") {
       await interaction.reply(`다이사이 보드판을 만듭니다.`);
       CreateSicbo(channelId);
@@ -50,4 +56,4 @@ bany.on("interactionCreate", async (interaction) => {
   }
 });
 
-bany.login(token);
+bany.login(TOKEN);
