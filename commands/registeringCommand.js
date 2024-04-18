@@ -1,23 +1,25 @@
 import axios from "axios";
+import { DISCORD_HEADER, APPLICATION_ID } from "../env.js";
 
 const RegisteringCommand = async () => {
-  const APPLICATION_ID = process.env.APPLICATION_ID;
-  const TOKEN = process.env.TOKEN;
-
+  console.log(APPLICATION_ID);
+  console.log(DISCORD_HEADER);
   const url = `https://discord.com/api/v10/applications/${APPLICATION_ID}/commands`;
 
-  const headers = {
-    Authorization: `Bot ${TOKEN}`,
+  const data = {
+    name: "회원가입",
+    description: "바니에게 게임을 하고싶다고 말합니다.",
+    options: [],
   };
 
-  const data = {
-    name: "다이사이",
-    description: "다이사이 보드판을 만듭니다.",
-    options: [],
-    z,
-  };
+  // const data = {
+  //   name: "다이사이",
+  //   description: "다이사이 보드판을 만듭니다.",
+  //   options: [],
+  // };
+
   axios
-    .post(url, data, { headers })
+    .post(url, data, { headers: DISCORD_HEADER })
     .then((response) => {
       console.log("Status Code:", response.status);
       console.log("Response Data:", response.data);

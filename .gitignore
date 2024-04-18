@@ -2,3 +2,4 @@ discord_api
 node_modules
 config.js
 .env
+env.js
