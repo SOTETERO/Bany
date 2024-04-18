@@ -44,6 +44,8 @@ bany.on("interactionCreate", async (interaction) => {
       let message_id = customId.substr(12);
 
       Betting(channelId, message_id, user, betType);
+      await interaction.reply("abc");
+      await interaction.deleteReply();
     }
   }
 });
