@@ -6,6 +6,7 @@ import CreateSicbo from "./commands/sicbo/createSicbo.js";
 import UpdateSicboGames from "./commands/sicbo/updateSicbo.js";
 import Betting from "./commands/sicbo/betting.js";
 import RegisterUser from "./commands/user/registerUser.js";
+import AttendanceUser from "./commands/user/attendanceUser.js";
 
 const bany = new Client({
   intents: [
@@ -32,11 +33,8 @@ bany.on("interactionCreate", async (interaction) => {
   if (interaction.isCommand()) {
     if (commandName == "회원가입") {
       await RegisterUser(interaction);
-    }
-    if (commandName == "출석체크") {
-      RegisterUser(user);
-
-      await interaction.reply(`User: ${user.username}#${user.discriminator}`);
+    } else if (commandName == "출석체크") {
+      await AttendanceUser(interaction);
     } else if (commandName == "다이사이") {
       await interaction.reply(`다이사이 보드판을 만듭니다.`);
       CreateSicbo(channelId);
