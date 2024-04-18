@@ -6,17 +6,29 @@ const RegisteringCommand = async () => {
   console.log(DISCORD_HEADER);
   const url = `https://discord.com/api/v10/applications/${APPLICATION_ID}/commands`;
 
-  const data = {
-    name: "회원가입",
-    description: "바니에게 게임을 하고싶다고 말합니다.",
-    options: [],
-  };
+  // const data = {
+  //   name: "회원가입",
+  //   description: "바니에게 게임을 하고싶다고 말합니다.",
+  //   options: [],
+  // };
 
   // const data = {
   //   name: "다이사이",
   //   description: "다이사이 보드판을 만듭니다.",
   //   options: [],
   // };
+
+  // const data = {
+  //   name: "구걸",
+  //   description: "바니에게 구걸을 합니다.",
+  //   options: [],
+  // };
+
+  const data = {
+    name: "잔액조회",
+    description: "현재 보유하고 있는 돈을 확인합니다.",
+    options: [],
+  };
 
   axios
     .post(url, data, { headers: DISCORD_HEADER })

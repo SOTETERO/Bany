@@ -23,9 +23,8 @@ const AttendanceUser = async (interaction) => {
       let remainTime = new Date(
         24 * 60 * 60 * 1000 - (Date.now() - user.attendanceTime)
       );
-
+      //로그 저장해야됨
       const embed = new EmbedBuilder()
-        //로그 저장해야됨
         .setTitle("출석체크 실패")
         .setDescription(`24시간이 안지났습니다`)
         .setFields({
