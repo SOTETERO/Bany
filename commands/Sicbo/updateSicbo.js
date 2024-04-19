@@ -71,14 +71,6 @@ const UpdateSicbo = async (sicboGame) => {
             value: lastGameValue,
           },
           {
-            name: `홀`,
-            value: obb_value,
-          },
-          {
-            name: `짝`,
-            value: even_value,
-          },
-          {
             name: `남은 시간 : `,
             value: `${remainingTime}`,
             inline: true,
@@ -93,22 +85,43 @@ const UpdateSicbo = async (sicboGame) => {
           },
         ],
       },
-    ],
-    components: [
       {
-        type: 1,
-        components: [
+        title: "----------:game_die: BETTING :game_die:----------",
+        fields: [
           {
-            type: 2,
-            label: "홀",
-            style: 1,
-            custom_id: `sicboBet_${"01"}_${messageId}`,
+            name: `홀`,
+            value: "",
+            inline: true,
           },
           {
-            type: 2,
-            label: "짝",
-            style: 1,
-            custom_id: `sicboBet_${"02"}_${messageId}`,
+            name: `짝`,
+            value: even_value,
+            inline: true,
+          },
+          {
+            name: "",
+            value: "",
+            inline: false,
+          },
+          {
+            name: `SMALL(4~10)`,
+            value: "",
+            inline: true,
+          },
+          {
+            name: `BIG(11~17)`,
+            value: "",
+            inline: true,
+          },
+          {
+            name: `SINGLE`,
+            value: "",
+            inline: false,
+          },
+          {
+            name: `SUM`,
+            value: "",
+            inline: false,
           },
         ],
       },

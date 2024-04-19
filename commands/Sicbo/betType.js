@@ -20,6 +20,13 @@ const BetType = {
   DOUBLE_5: 5,
   DOUBLE_6: 5,
 
+  SINGLE_1: 1,
+  SINGLE_2: 1,
+  SINGLE_3: 1,
+  SINGLE_4: 1,
+  SINGLE_5: 1,
+  SINGLE_6: 1,
+
   SUM_4: 5,
   SUM_5: 5,
   SUM_6: 5,
@@ -50,11 +57,4 @@ const BetType = {
   DOMINO_4_5: 1,
   DOMINO_4_6: 1,
   DOMINO_5_6: 1,
-
-  SINGLE_1: 1,
-  SINGLE_2: 1,
-  SINGLE_3: 1,
-  SINGLE_4: 1,
-  SINGLE_5: 1,
-  SINGLE_6: 1,
 };

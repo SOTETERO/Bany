@@ -32,6 +32,8 @@ bany.on("messageCreate", (msg) => {
 bany.on("interactionCreate", async (interaction) => {
   const { commandName, user, customId, channelId } = interaction;
   if (interaction.isCommand()) {
+    console.log(interaction);
+    console.log(interaction.options.getString("베팅"));
     if (commandName == "회원가입") {
       await RegisterUser(interaction);
     } else if (commandName == "출석체크") {
