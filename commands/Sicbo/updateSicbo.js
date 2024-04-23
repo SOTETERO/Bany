@@ -1,3 +1,4 @@
+import { DISCORD_HEADER } from "../../env.js";
 import GetUser from "../user/getUser.js";
 import { userDatas } from "../user/userDatas.js";
 import { sicboGames } from "./sicboGame.js";
@@ -26,13 +27,7 @@ const UpdateSicboGames = async () => {
 const UpdateSicbo = async (sicboGame) => {
   const { channelId, messageId } = sicboGame;
 
-  const TOKEN = process.env.TOKEN;
   const url = `https://discord.com/api/v10/channels/${channelId}/messages/${messageId}`;
-
-  const headers = {
-    Authorization: `Bot ${TOKEN}`,
-    "Content-Type": "application/json",
-  };
 
   let lastGameValue = "";
   sicboGame.lastBetting.forEach((bet) => {
@@ -99,9 +94,9 @@ const UpdateSicbo = async (sicboGame) => {
             inline: true,
           },
           {
-            name: "",
+            name: `SINGLE`,
             value: "",
-            inline: false,
+            inline: true,
           },
           {
             name: `SMALL(4~10)`,
@@ -114,14 +109,9 @@ const UpdateSicbo = async (sicboGame) => {
             inline: true,
           },
           {
-            name: `SINGLE`,
-            value: "",
-            inline: false,
-          },
-          {
             name: `SUM`,
             value: "",
-            inline: false,
+            inline: true,
           },
         ],
       },
@@ -131,57 +121,87 @@ const UpdateSicbo = async (sicboGame) => {
       {
         type: 1,
         components: [
-          { type: 2, label: "홀", style: 1, custom_id: "odd" },
-          { type: 2, label: "짝", style: 1, custom_id: "even" },
-          { type: 2, label: "큰", style: 1, custom_id: "big" },
-          { type: 2, label: "작은", style: 1, custom_id: "small" },
+          { type: 2, label: "홀", style: 1, custom_id: "sicboBet_odd" },
+          { type: 2, label: "짝", style: 1, custom_id: "sicboBet_even" },
+          { type: 2, label: "SUM4", style: 1, custom_id: "sicboBet_sum4" },
+          { type: 2, label: "SUM17", style: 1, custom_id: "sicboBet_sum17" },
+          { type: 2, label: "SUM9", style: 1, custom_id: "sicboBet_sum9" },
         ],
       },
       {
         type: 1,
         components: [
-          { type: 2, label: "SINGLE1", style: 1, custom_id: "single1" },
-          { type: 2, label: "SINGLE2", style: 1, custom_id: "single2" },
-          { type: 2, label: "SINGLE3", style: 1, custom_id: "single3" },
-          { type: 2, label: "SINGLE4", style: 1, custom_id: "single4" },
-          { type: 2, label: "SINGLE5", style: 1, custom_id: "single5" },
+          { type: 2, label: "큰", style: 1, custom_id: "sicboBet_big" },
+          { type: 2, label: "작은", style: 1, custom_id: "sicboBet_small" },
+          { type: 2, label: "SUM5", style: 1, custom_id: "sicboBet_sum5" },
+          { type: 2, label: "SUM16", style: 1, custom_id: "sicboBet_sum16" },
+          { type: 2, label: "SUM10", style: 1, custom_id: "sicboBet_sum10" },
         ],
       },
       {
         type: 1,
         components: [
-          { type: 2, label: "SINGLE6", style: 1, custom_id: "single6" },
-          { type: 2, label: "SUM4", style: 1, custom_id: "sum4" },
-          { type: 2, label: "SUM5", style: 1, custom_id: "sum5" },
-          { type: 2, label: "SUM6", style: 1, custom_id: "sum6" },
-          { type: 2, label: "SUM7", style: 1, custom_id: "sum7" },
+          {
+            type: 2,
+            label: "SINGLE1",
+            style: 1,
+            custom_id: "sicboBet_single1",
+          },
+          {
+            type: 2,
+            label: "SINGLE2",
+            style: 1,
+            custom_id: "sicboBet_single2",
+          },
+          { type: 2, label: "SUM6", style: 1, custom_id: "sicboBet_sum6" },
+          { type: 2, label: "SUM15", style: 1, custom_id: "sicboBet_sum15" },
+          { type: 2, label: "SUM11", style: 1, custom_id: "sicboBet_sum11" },
         ],
       },
       {
         type: 1,
         components: [
-          { type: 2, label: "SUM8", style: 1, custom_id: "sum8" },
-          { type: 2, label: "SUM9", style: 1, custom_id: "sum9" },
-          { type: 2, label: "SUM10", style: 1, custom_id: "sum10" },
-          { type: 2, label: "SUM11", style: 1, custom_id: "sum11" },
-          { type: 2, label: "SUM12", style: 1, custom_id: "sum12" },
+          {
+            type: 2,
+            label: "SINGLE3",
+            style: 1,
+            custom_id: "sicboBet_single3",
+          },
+          {
+            type: 2,
+            label: "SINGLE4",
+            style: 1,
+            custom_id: "sicboBet_single4",
+          },
+          { type: 2, label: "SUM7", style: 1, custom_id: "sicboBet_sum7" },
+          { type: 2, label: "SUM14", style: 1, custom_id: "sicboBet_sum14" },
+          { type: 2, label: "SUM12", style: 1, custom_id: "sicboBet_sum12" },
         ],
       },
       {
         type: 1,
         components: [
-          { type: 2, label: "SUM13", style: 1, custom_id: "sum13" },
-          { type: 2, label: "SUM14", style: 1, custom_id: "sum14" },
-          { type: 2, label: "SUM15", style: 1, custom_id: "sum15" },
-          { type: 2, label: "SUM16", style: 1, custom_id: "sum16" },
-          { type: 2, label: "SUM17", style: 1, custom_id: "sum17" },
+          {
+            type: 2,
+            label: "SINGLE5",
+            style: 1,
+            custom_id: "sicboBet_single5",
+          },
+          {
+            type: 2,
+            label: "SINGLE6",
+            style: 1,
+            custom_id: "sicboBet_single6",
+          },
+          { type: 2, label: "SUM8", style: 1, custom_id: "sicboBet_sum8" },
+          { type: 2, label: "SUM13", style: 1, custom_id: "sicboBet_sum13" },
         ],
       },
     ],
   };
 
   axios
-    .patch(url, data, { headers })
+    .patch(url, data, { headers: DISCORD_HEADER })
     .then((response) => {})
     .catch((error) => {
       console.log("Error:", error.message);

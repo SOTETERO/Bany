@@ -1,15 +1,10 @@
+import { DISCORD_HEADER } from "../../env.js";
 import { sicboGames } from "./sicboGame.js";
 
 import axios from "axios";
 
 const CreateSicbo = async (channelId) => {
-  const TOKEN = process.env.TOKEN;
   const url = `https://discord.com/api/v10/channels/${channelId}/messages`;
-
-  const headers = {
-    Authorization: `Bot ${TOKEN}`,
-    "Content-Type": "application/json",
-  };
 
   const data = {
     embeds: [
@@ -20,7 +15,7 @@ const CreateSicbo = async (channelId) => {
   };
 
   axios
-    .post(url, data, { headers })
+    .post(url, data, { headers: DISCORD_HEADER })
     .then((response) => {
       sicboGames.push({
         channelId: channelId,
