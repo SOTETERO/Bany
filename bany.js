@@ -48,12 +48,8 @@ bany.on("interactionCreate", async (interaction) => {
     }
   } else if (interaction.isButton()) {
     if ("sicboBet" == customId.substr(0, 8)) {
-      let betType = customId.substr(9, 2);
-      let message_id = customId.substr(12);
-
-      Betting(channelId, message_id, user, betType);
-      await interaction.reply("abc");
-      await interaction.deleteReply();
+      await Betting(interaction, customId);
+      console.log(customId);
     }
   }
 });

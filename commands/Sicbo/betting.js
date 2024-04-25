@@ -2,7 +2,9 @@ import GetUser from "../user/getUser.js";
 import { userDatas } from "../user/userDatas.js";
 import { sicboGames } from "./sicboGame.js";
 
-const Betting = (channelId, messageId, userInfo, type) => {
+const Betting = async (interaction) => {
+  const { channelId, messageId, customId } = interaction;
+
   const gameInfo = sicboGames.find(
     (game) => game.channelId === channelId && game.messageId === messageId
   );
