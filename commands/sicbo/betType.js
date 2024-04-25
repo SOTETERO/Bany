@@ -1,4 +1,4 @@
-const BetType = {
+export const BetType = {
   BIG: "01",
   SMALL: "02",
 

@@ -48,8 +48,7 @@ bany.on("interactionCreate", async (interaction) => {
     }
   } else if (interaction.isButton()) {
     if ("sicboBet" == customId.substr(0, 8)) {
-      await Betting(interaction, customId);
-      console.log(customId);
+      await Betting(interaction);
     }
   }
 });
