@@ -43,8 +43,7 @@ bany.on("interactionCreate", async (interaction) => {
     } else if (commandName == "잔액조회") {
       await BalanceInquiry(interaction);
     } else if (commandName == "다이사이") {
-      await interaction.reply(`다이사이 보드판을 만듭니다.`);
-      CreateSicbo(channelId);
+      await CreateSicbo(interaction);
     }
   } else if (interaction.isButton()) {
     if ("sicboBet" == customId.substr(0, 8)) {

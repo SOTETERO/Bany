@@ -1,6 +1,7 @@
 import { DISCORD_HEADER } from "../../env.js";
 import GetUser from "../user/getUser.js";
 import { userDatas } from "../user/userDatas.js";
+import Settle from "./Settle.js";
 import { BetType } from "./betType.js";
 import { sicboGames } from "./sicboGame.js";
 
@@ -21,7 +22,9 @@ const UpdateSicboGames = async () => {
   });
 
   if (remainingTime <= 0) {
-    ResetSicbo();
+    startTime = performance.now();
+    remainingTime = performance.now();
+    Settle(dices);
   }
 };
 
@@ -88,46 +91,46 @@ const UpdateSicbo = async (sicboGame) => {
         break;
 
       case BetType.SUM_4:
-        single_value += `${globalName} {4}: ${betting}\n`;
+        sum_value += `${globalName} {4}: ${betting}\n`;
         break;
       case BetType.SUM_5:
-        single_value += `${globalName} {5}: ${betting}\n`;
+        sum_value += `${globalName} {5}: ${betting}\n`;
         break;
       case BetType.SUM_6:
-        single_value += `${globalName} {6}: ${betting}\n`;
+        sum_value += `${globalName} {6}: ${betting}\n`;
         break;
       case BetType.SUM_7:
-        single_value += `${globalName} {7}: ${betting}\n`;
+        sum_value += `${globalName} {7}: ${betting}\n`;
         break;
       case BetType.SUM_8:
-        single_value += `${globalName} {8}: ${betting}\n`;
+        sum_value += `${globalName} {8}: ${betting}\n`;
         break;
       case BetType.SUM_9:
-        single_value += `${globalName} {9}: ${betting}\n`;
+        sum_value += `${globalName} {9}: ${betting}\n`;
         break;
       case BetType.SUM_10:
-        single_value += `${globalName} {10}: ${betting}\n`;
+        sum_value += `${globalName} {10}: ${betting}\n`;
         break;
       case BetType.SUM_11:
-        single_value += `${globalName} {11}: ${betting}\n`;
+        sum_value += `${globalName} {11}: ${betting}\n`;
         break;
       case BetType.SUM_12:
-        single_value += `${globalName} {12}: ${betting}\n`;
+        sum_value += `${globalName} {12}: ${betting}\n`;
         break;
       case BetType.SUM_13:
-        single_value += `${globalName} {13}: ${betting}\n`;
+        sum_value += `${globalName} {13}: ${betting}\n`;
         break;
       case BetType.SUM_14:
-        single_value += `${globalName} {14}: ${betting}\n`;
+        sum_value += `${globalName} {14}: ${betting}\n`;
         break;
       case BetType.SUM_15:
-        single_value += `${globalName} {15}: ${betting}\n`;
+        sum_value += `${globalName} {15}: ${betting}\n`;
         break;
       case BetType.SUM_16:
-        single_value += `${globalName} {16}: ${betting}\n`;
+        sum_value += `${globalName} {16}: ${betting}\n`;
         break;
       case BetType.SUM_17:
-        single_value += `${globalName} {17}: ${betting}\n`;
+        sum_value += `${globalName} {17}: ${betting}\n`;
         break;
 
       default:
@@ -137,30 +140,13 @@ const UpdateSicbo = async (sicboGame) => {
   const data = {
     embeds: [
       {
-        title: ":game_die: 다이 사이 :game_die:",
+        title: "----------:game_die: BETTING :game_die:----------",
         fields: [
-          {
-            name: `지난게임결과`,
-            value: lastGameValue,
-          },
           {
             name: `남은 시간 : `,
             value: `${remainingTime}`,
             inline: true,
           },
-          {
-            name: `DICE`,
-            value: `${dices[0]} ${dices[1]} ${dices[2]}`,
-          },
-          {
-            name: `합`,
-            value: `${sum}`,
-          },
-        ],
-      },
-      {
-        title: "----------:game_die: BETTING :game_die:----------",
-        fields: [
           {
             name: `홀`,
             value: odd_value,
@@ -374,60 +360,6 @@ const UpdateSicbo = async (sicboGame) => {
     .catch((error) => {
       console.log("Error:", error.message);
     });
-};
-
-const ResetSicbo = () => {
-  startTime = performance.now();
-  remainingTime = performance.now();
-
-  dices[0] = Math.floor(Math.random() * 6 + 1);
-  dices[1] = Math.floor(Math.random() * 6 + 1);
-  dices[2] = Math.floor(Math.random() * 6 + 1);
-
-  sum = dices[0] + dices[1] + dices[2];
-
-  sicboGames.forEach((game) => {
-    game.lastBetting = [];
-
-    game.betting.forEach((bet) => {
-      let bettingInfo = game.lastBetting.find(
-        (user) => user.userId === bet.userId
-      );
-
-      if (typeof bettingInfo == "undefined") {
-        bettingInfo = {
-          userId: bet.userId,
-          globalName: bet.globalName,
-          betting: 0,
-          obtained: 0,
-        };
-        game.lastBetting.push(bettingInfo);
-      }
-
-      switch (bet.type) {
-        case "01":
-          bettingInfo.betting += bet.betting;
-          if (sum % 2 == 1) {
-            bettingInfo.obtained += bet.betting * 2;
-          }
-          break;
-        case "02":
-          bettingInfo.betting += bet.betting;
-          if (sum % 2 == 0) {
-            bettingInfo.obtained += bet.betting * 2;
-          }
-          break;
-        default:
-      }
-    });
-
-    game.lastBetting.forEach((bet) => {
-      const userData = GetUser(bet.userId);
-      userData.coin += bet.obtained;
-    });
-
-    game.betting = [];
-  });
 };
 
 export default UpdateSicboGames;

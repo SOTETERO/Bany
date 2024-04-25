@@ -8,9 +8,6 @@ const Betting = async (interaction) => {
   let betType = customId.substr(9, 2);
   let messageId = customId.substr(12);
 
-  console.log(betType);
-  console.log(messageId);
-
   const gameInfo = sicboGames.find(
     (game) => game.channelId === channelId && game.messageId === messageId
   );
@@ -38,7 +35,8 @@ const Betting = async (interaction) => {
     console.log(`user.globalName : 돈 부족`);
   }
 
-  console.log(bettingInfo);
+  await interaction.reply(`배팅합니다.`);
+  await interaction.deleteReply();
 };
 
 export default Betting;

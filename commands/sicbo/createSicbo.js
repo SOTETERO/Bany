@@ -3,13 +3,15 @@ import { sicboGames } from "./sicboGame.js";
 
 import axios from "axios";
 
-const CreateSicbo = async (channelId) => {
+const CreateSicbo = async (interaction) => {
+  const { channelId } = interaction;
+
   const url = `https://discord.com/api/v10/channels/${channelId}/messages`;
 
   const data = {
     embeds: [
       {
-        title: ":game_die: 다이 사이 :game_die: Loading...",
+        title: ":game_die: 다이 사이 :game_die:\n Loading...",
       },
     ],
   };
@@ -25,7 +27,10 @@ const CreateSicbo = async (channelId) => {
       });
     })
     .catch((error) => {
-      console.log("Error:", error.message);
+      console.log("Create sicbo message error");
     });
+
+  await interaction.reply("다이사이");
+  await interaction.deleteReply();
 };
 export default CreateSicbo;
