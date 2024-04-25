@@ -32,6 +32,8 @@ bany.on("messageCreate", (msg) => {
 bany.on("interactionCreate", async (interaction) => {
   const { commandName, user, customId, channelId } = interaction;
   if (interaction.isCommand()) {
+    console.log(interaction);
+    console.log(interaction.options.getString("베팅"));
     if (commandName == "회원가입") {
       await RegisterUser(interaction);
     } else if (commandName == "출석체크") {
@@ -41,17 +43,11 @@ bany.on("interactionCreate", async (interaction) => {
     } else if (commandName == "잔액조회") {
       await BalanceInquiry(interaction);
     } else if (commandName == "다이사이") {
-      await interaction.reply(`다이사이 보드판을 만듭니다.`);
-      CreateSicbo(channelId);
+      await CreateSicbo(interaction);
     }
   } else if (interaction.isButton()) {
     if ("sicboBet" == customId.substr(0, 8)) {
-      let betType = customId.substr(9, 2);
-      let message_id = customId.substr(12);
-
-      Betting(channelId, message_id, user, betType);
-      await interaction.reply("abc");
-      await interaction.deleteReply();
+      await Betting(interaction);
     }
   }
 });
