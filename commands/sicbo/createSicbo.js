@@ -3,6 +3,8 @@ import { sicboGames } from "./sicboGame.js";
 
 import axios from "axios";
 
+let sicboCount = 0;
+
 const CreateSicbo = async (interaction) => {
   const { channelId } = interaction;
 
@@ -19,10 +21,12 @@ const CreateSicbo = async (interaction) => {
   axios
     .post(url, data, { headers: DISCORD_HEADER })
     .then((response) => {
+      sicboCount += 1;
       sicboGames.push({
+        id: sicboCount,
         channelId: channelId,
         messageId: response.data.id,
-        lastBetting: [],
+        stake: 1000,
         betting: [],
       });
     })

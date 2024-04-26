@@ -1,42 +1,47 @@
 import GetUser from "../user/getUser.js";
-import { userDatas } from "../user/userDatas.js";
 import { sicboGames } from "./sicboGame.js";
 
 const Betting = async (interaction) => {
-  const { channelId, customId, user } = interaction;
+  const { user, customId } = interaction;
 
-  let betType = customId.substr(9, 2);
-  let messageId = customId.substr(12);
+  const betType = customId.substr(9, 2);
+  const boardId = customId.substr(12);
 
-  const gameInfo = sicboGames.find(
-    (game) => game.channelId === channelId && game.messageId === messageId
-  );
+  const board = sicboGames.find((game) => game.id == boardId);
+  const userData = GetUser(user.id);
 
-  let bettingInfo = gameInfo.betting.find(
-    (betting) => betting.userId === user.id && betting.type === betType
-  );
-
-  if (typeof bettingInfo == "undefined") {
-    bettingInfo = {
-      userId: user.id,
-      globalName: user.globalName,
-      type: betType,
-      betting: 0,
-    };
-    gameInfo.betting.push(bettingInfo);
+  if (typeof userData == "undefined") {
+    await interaction.reply(`회원가입 안됬음.`);
+    await interaction.deleteReply();
+    return;
   }
 
-  const userData = GetUser(bettingInfo.userId);
-
-  if (userData.coin - 1000 >= 0) {
-    userData.coin -= 1000;
-    bettingInfo.betting += 1000;
+  if (userData.coin < board.stake) {
+    //판돈이 많은 경우
+    await interaction.reply(`돈이 부족 합니다.`);
+    await interaction.deleteReply();
   } else {
-    console.log(`user.globalName : 돈 부족`);
-  }
+    //판돈 있는지 체크후 없으면 betting 데이터 넣기
+    let bettingInfo = board.betting.find(
+      (betting) => betting.userId === user.id && betting.type === betType
+    );
 
-  await interaction.reply(`배팅합니다.`);
-  await interaction.deleteReply();
+    if (typeof bettingInfo == "undefined") {
+      bettingInfo = {
+        userId: user.id,
+        userData: userData,
+        type: betType,
+        betting: 0,
+      };
+      board.betting.push(bettingInfo);
+    }
+
+    userData.coin -= board.stake;
+    bettingInfo.betting += board.stake;
+
+    await interaction.reply(`배팅합니다.`);
+    await interaction.deleteReply();
+  }
 };
 
 export default Betting;

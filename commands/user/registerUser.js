@@ -15,6 +15,7 @@ const RegisterUser = async (interaction) => {
     userDatas.push({
       id: user.id,
       nickname: user.username,
+      globalName: user.globalName,
       coin: startCoin,
       attendanceTime: new Date("2024-01-01"),
     });
