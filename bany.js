@@ -1,9 +1,15 @@
-import { Client, GatewayIntentBits } from "discord.js";
-import express from "express";
+import { Client, GatewayIntentBits, User } from "discord.js";
 
-import { token } from "./config.js";
+import CreateSicbo from "./commands/sicbo/createSicbo.js";
+import UpdateSicboGames from "./commands/sicbo/updateSicbo.js";
+import Betting from "./commands/sicbo/betting.js";
+import RegisterUser from "./commands/user/registerUser.js";
+import AttendanceUser from "./commands/user/attendanceUser.js";
+import { TOKEN } from "./env.js";
+import Begging from "./commands/user/begging.js";
+import BalanceInquiry from "./commands/user/balanceInquiry.js";
 
-const client = new Client({
+const bany = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
@@ -11,12 +17,37 @@ const client = new Client({
   ],
 });
 
-client.on("ready", () => console.log(`${client.user.tag} 에 로그인됨`));
+bany.on("ready", () => {
+  console.log(`${bany.user.tag} 에 로그인됨`);
 
-client.on("messageCreate", (msg) => {
-  if (msg.author.bot) return;
-
-  console.log(msg.channel.id);
+  const sicboUpdateInterval = setInterval(() => {
+    UpdateSicboGames();
+  }, 1000);
 });
 
-client.login(token);
+bany.on("messageCreate", (msg) => {
+  if (msg.author.bot) return;
+});
+
+bany.on("interactionCreate", async (interaction) => {
+  const { commandName, user, customId, channelId } = interaction;
+  if (interaction.isCommand()) {
+    if (commandName == "회원가입") {
+      await RegisterUser(interaction);
+    } else if (commandName == "출석체크") {
+      await AttendanceUser(interaction);
+    } else if (commandName == "구걸") {
+      await Begging(interaction);
+    } else if (commandName == "잔액조회") {
+      await BalanceInquiry(interaction);
+    } else if (commandName == "다이사이") {
+      await CreateSicbo(interaction);
+    }
+  } else if (interaction.isButton()) {
+    if ("sicboBet" == customId.substr(0, 8)) {
+      await Betting(interaction);
+    }
+  }
+});
+
+bany.login(TOKEN);

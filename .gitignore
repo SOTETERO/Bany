@@ -1,3 +1,5 @@
+discord_api
 node_modules
 config.js
-create_slash_command.py
+.env
+env.js
