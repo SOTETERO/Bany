@@ -1,27 +1,25 @@
 import { EmbedBuilder } from "discord.js";
-import { userDatas } from "./userDatas.js";
+import { QuaryDatabaes } from "../mysql.js";
 
 const startCoin = 5000;
 
-/**
- * 유저 데이터를 만듭니다.
- */
 const RegisterUser = async (interaction) => {
   const { user } = interaction;
 
-  const userData = userDatas.find((userData) => userData.id === user.id);
+  const select_quary = `SELECT * FROM user WHERE discord_id = ${user.id}`;
+  const userData = await QuaryDatabaes(select_quary);
 
-  if (typeof userData == "undefined") {
-    userDatas.push({
-      id: user.id,
-      nickname: user.username,
-      globalName: user.globalName,
-      coin: startCoin,
-      attendanceTime: new Date("2024-01-01"),
-    });
+  if (userData.length == 0) {
+    const koreaTime = new Date(new Date().getTime() + 9 * 3600 * 1000);
+    const formattedTime = new Date(koreaTime)
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+
+    const insert_quary = `INSERT INTO user (discord_id, coin, registration_time, attendance_time, begging_time) values (${user.id}, ${startCoin}, '${formattedTime}', '${formattedTime}', '${formattedTime}');`;
+    await QuaryDatabaes(insert_quary);
 
     const embed = new EmbedBuilder()
-      //로그 저장해야됨
       .setTitle("회원가입 완료")
       .setDescription(`환영합니다, ${user.username}!`);
     await interaction.reply({ embeds: [embed] });
