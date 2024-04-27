@@ -1,6 +1,4 @@
 import { DISCORD_HEADER } from "../../env.js";
-import GetUser from "../user/getUser.js";
-import { userDatas } from "../user/userDatas.js";
 import Settle from "./Settle.js";
 import { BetType } from "./betType.js";
 import BoardBetting from "./boardBetting.js";
