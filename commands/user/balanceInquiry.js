@@ -1,5 +1,4 @@
 import { EmbedBuilder } from "@discordjs/builders";
-import GetUser from "./getUser.js";
 
 const BalanceInquiry = async (interaction) => {
   const user = GetUser(interaction.user.id);

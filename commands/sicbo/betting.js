@@ -1,4 +1,3 @@
-import GetUser from "../user/getUser.js";
 import { sicboGames } from "./sicboGame.js";
 
 const Betting = async (interaction) => {
