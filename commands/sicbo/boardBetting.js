@@ -1,7 +1,6 @@
 import axios from "axios";
 import { BetType } from "./betType.js";
 import { DISCORD_HEADER } from "../../env.js";
-import { userDatas } from "../user/userDatas.js";
 
 const BoardBetting = async (sicboGame, remainingTime) => {
   const { id, channelId, messageId } = sicboGame;
