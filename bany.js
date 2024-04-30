@@ -9,6 +9,7 @@ import { TOKEN } from "./env.js";
 import Begging from "./commands/user/begging.js";
 import BalanceInquiry from "./commands/user/balanceInquiry.js";
 import GetCoin from "./commands/user/getUserCoin.js";
+import { QuaryDatabaes } from "./commands/mysql.js";
 
 const bany = new Client({
   intents: [
@@ -18,8 +19,11 @@ const bany = new Client({
   ],
 });
 
-bany.on("ready", () => {
+bany.on("ready", async () => {
   console.log(`${bany.user.tag} 에 로그인됨`);
+
+  const quaary = `truncate sicboBoard`;
+  await QuaryDatabaes(quaary);
 
   const sicboUpdateInterval = setInterval(() => {
     UpdateSicboGames();

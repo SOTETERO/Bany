@@ -1,6 +1,4 @@
-import { DISCORD_HEADER } from "../../env.js";
 import Settle from "./Settle.js";
-import { BetType } from "./betType.js";
 import BoardBetting from "./boardBetting.js";
 import { sicboGames } from "./sicboGame.js";
 
@@ -11,7 +9,6 @@ let remainingTime = performance.now();
 let gameTime = 20;
 
 let dices = [1, 1, 1];
-let sum = 3;
 
 const UpdateSicboGames = async () => {
   remainingTime = parseInt(gameTime - (performance.now() - startTime) / 1000);
