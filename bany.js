@@ -8,6 +8,7 @@ import AttendanceUser from "./commands/user/attendanceUser.js";
 import { TOKEN } from "./env.js";
 import Begging from "./commands/user/begging.js";
 import BalanceInquiry from "./commands/user/balanceInquiry.js";
+import GetCoin from "./commands/user/getUserCoin.js";
 
 const bany = new Client({
   intents: [
