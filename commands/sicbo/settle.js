@@ -1,5 +1,4 @@
 import { BetType } from "./betType.js";
-import { sicboGames } from "./sicboGame.js";
 
 const Settle = (dices) => {
   dices[0] = Math.floor(Math.random() * 6 + 1);

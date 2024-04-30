@@ -18,9 +18,9 @@ const CreateSicbo = async (interaction) => {
 
   try {
     const response = await axios.post(url, data, { headers: DISCORD_HEADER });
-    const insert_quary = `INSERT INTO sicboBoard (channel_id, message_id, stake) values (${channelId}, ${
+    const insert_quary = `INSERT INTO sicboBoard (channel_id, message_id, state,stake) values (${channelId}, ${
       response.data.id
-    }, ${1000})`;
+    }, 1, ${1000})`;
 
     await QuaryDatabaes(insert_quary);
   } catch (error) {

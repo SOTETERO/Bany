@@ -1,5 +1,3 @@
-import { sicboGames } from "./sicboGame.js";
-
 const Betting = async (interaction) => {
   const { user, customId } = interaction;
 
