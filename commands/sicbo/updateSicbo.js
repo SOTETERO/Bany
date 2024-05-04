@@ -1,6 +1,7 @@
 import { QuaryDatabaes } from "../mysql.js";
 import Settle from "./Settle.js";
 import BoardBetting from "./boardBetting.js";
+import BoardSettle from "./boardSettle.js";
 
 let startTime = performance.now();
 let remainingTime = performance.now();
@@ -47,6 +48,7 @@ const UpdateSicboGames = async () => {
         await BoardBetting(sicboBoard, remainingTime);
       } else {
         //정산 판 보여주기
+        await BoardSettle(sicboBoard, dices, remainingTime);
       }
     }
   }
