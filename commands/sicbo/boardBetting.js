@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BetType } from "./betType.js";
 import { DISCORD_HEADER } from "../../env.js";
+import { QuaryDatabaes } from "../mysql.js";
 
 const BoardBetting = async (sicboGame, remainingTime) => {
   const { id, channel_id, message_id } = sicboGame;
@@ -14,93 +15,96 @@ const BoardBetting = async (sicboGame, remainingTime) => {
   let single_value = "";
   let sum_value = "";
 
-  // sicboGame.betting.forEach((bet) => {
-  //   const globalName = bet.userData.globalName;
-  //   const type = bet.type;
-  //   const betting = bet.betting;
+  const bet_quary = `SELECT * FROM sicboBet WHERE board_id = ${id}`;
+  const bets = await QuaryDatabaes(bet_quary);
 
-  //   switch (type) {
-  //     case BetType.ODD:
-  //       odd_value += `${globalName} : ${betting}\n`;
-  //       break;
+  bets.forEach((bet) => {
+    const type = bet.bet_type.toString().padStart(2, "0");
+    const coin = bet.coin;
+    const nickname = bet.nickname;
 
-  //     case BetType.EVEN:
-  //       even_value += `${globalName} : ${betting}\n`;
-  //       break;
+    switch (type) {
+      case BetType.ODD:
+        odd_value += `${nickname} : ${coin}\n`;
+        break;
 
-  //     case BetType.BIG:
-  //       big_value += `${globalName} : ${betting}\n`;
-  //       break;
+      case BetType.EVEN:
+        even_value += `${nickname} : ${coin}\n`;
+        break;
 
-  //     case BetType.SMALL:
-  //       small_value += `${globalName} : ${betting}\n`;
-  //       break;
+      case BetType.BIG:
+        big_value += `${nickname} : ${coin}\n`;
+        break;
 
-  //     case BetType.SINGLE_1:
-  //       single_value += `${globalName} {1}: ${betting}\n`;
-  //       break;
-  //     case BetType.SINGLE_2:
-  //       single_value += `${globalName} {2}: ${betting}\n`;
-  //       break;
-  //     case BetType.SINGLE_3:
-  //       single_value += `${globalName} {3}: ${betting}\n`;
-  //       break;
-  //     case BetType.SINGLE_4:
-  //       single_value += `${globalName} {4}: ${betting}\n`;
-  //       break;
-  //     case BetType.SINGLE_5:
-  //       single_value += `${globalName} {5}: ${betting}\n`;
-  //       break;
-  //     case BetType.SINGLE_6:
-  //       single_value += `${globalName} {6}: ${betting}\n`;
-  //       break;
+      case BetType.SMALL:
+        small_value += `${nickname} : ${coin}\n`;
+        break;
 
-  //     case BetType.SUM_4:
-  //       sum_value += `${globalName} {4}: ${betting}\n`;
-  //       break;
-  //     case BetType.SUM_5:
-  //       sum_value += `${globalName} {5}: ${betting}\n`;
-  //       break;
-  //     case BetType.SUM_6:
-  //       sum_value += `${globalName} {6}: ${betting}\n`;
-  //       break;
-  //     case BetType.SUM_7:
-  //       sum_value += `${globalName} {7}: ${betting}\n`;
-  //       break;
-  //     case BetType.SUM_8:
-  //       sum_value += `${globalName} {8}: ${betting}\n`;
-  //       break;
-  //     case BetType.SUM_9:
-  //       sum_value += `${globalName} {9}: ${betting}\n`;
-  //       break;
-  //     case BetType.SUM_10:
-  //       sum_value += `${globalName} {10}: ${betting}\n`;
-  //       break;
-  //     case BetType.SUM_11:
-  //       sum_value += `${globalName} {11}: ${betting}\n`;
-  //       break;
-  //     case BetType.SUM_12:
-  //       sum_value += `${globalName} {12}: ${betting}\n`;
-  //       break;
-  //     case BetType.SUM_13:
-  //       sum_value += `${globalName} {13}: ${betting}\n`;
-  //       break;
-  //     case BetType.SUM_14:
-  //       sum_value += `${globalName} {14}: ${betting}\n`;
-  //       break;
-  //     case BetType.SUM_15:
-  //       sum_value += `${globalName} {15}: ${betting}\n`;
-  //       break;
-  //     case BetType.SUM_16:
-  //       sum_value += `${globalName} {16}: ${betting}\n`;
-  //       break;
-  //     case BetType.SUM_17:
-  //       sum_value += `${globalName} {17}: ${betting}\n`;
-  //       break;
+      case BetType.SINGLE_1:
+        single_value += `${nickname} {1}: ${coin}\n`;
+        break;
+      case BetType.SINGLE_2:
+        single_value += `${nickname} {2}: ${coin}\n`;
+        break;
+      case BetType.SINGLE_3:
+        single_value += `${nickname} {3}: ${coin}\n`;
+        break;
+      case BetType.SINGLE_4:
+        single_value += `${nickname} {4}: ${coin}\n`;
+        break;
+      case BetType.SINGLE_5:
+        single_value += `${nickname} {5}: ${coin}\n`;
+        break;
+      case BetType.SINGLE_6:
+        single_value += `${nickname} {6}: ${coin}\n`;
+        break;
 
-  //     default:
-  //   }
-  // });
+      case BetType.SUM_4:
+        sum_value += `${nickname} {4}: ${coin}\n`;
+        break;
+      case BetType.SUM_5:
+        sum_value += `${nickname} {5}: ${coin}\n`;
+        break;
+      case BetType.SUM_6:
+        sum_value += `${nickname} {6}: ${coin}\n`;
+        break;
+      case BetType.SUM_7:
+        sum_value += `${nickname} {7}: ${coin}\n`;
+        break;
+      case BetType.SUM_8:
+        sum_value += `${nickname} {8}: ${coin}\n`;
+        break;
+      case BetType.SUM_9:
+        sum_value += `${nickname} {9}: ${coin}\n`;
+        break;
+      case BetType.SUM_10:
+        sum_value += `${nickname} {10}: ${coin}\n`;
+        break;
+      case BetType.SUM_11:
+        sum_value += `${nickname} {11}: ${coin}\n`;
+        break;
+      case BetType.SUM_12:
+        sum_value += `${nickname} {12}: ${coin}\n`;
+        break;
+      case BetType.SUM_13:
+        sum_value += `${nickname} {13}: ${coin}\n`;
+        break;
+      case BetType.SUM_14:
+        sum_value += `${nickname} {14}: ${coin}\n`;
+        break;
+      case BetType.SUM_15:
+        sum_value += `${nickname} {15}: ${coin}\n`;
+        break;
+      case BetType.SUM_16:
+        sum_value += `${nickname} {16}: ${coin}\n`;
+        break;
+      case BetType.SUM_17:
+        sum_value += `${nickname} {17}: ${coin}\n`;
+        break;
+
+      default:
+    }
+  });
 
   const data = {
     embeds: [

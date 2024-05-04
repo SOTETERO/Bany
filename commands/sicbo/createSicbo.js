@@ -15,12 +15,10 @@ const CreateSicbo = async (interaction) => {
       },
     ],
   };
-  console.log(channelId);
 
   try {
     const response = await axios.post(url, data, { headers: DISCORD_HEADER });
-    //console.log(response);
-    const insert_quary = `INSERT INTO sicboBoard (channel_id, message_id, state,stake) values (${channelId.toString()}, ${
+    const insert_quary = `INSERT INTO sicboBoard (channel_id, message_id, state, stake) values (${channelId.toString()}, ${
       response.data.id
     }, true, ${1000})`;
 

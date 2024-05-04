@@ -20,10 +20,10 @@ const bany = new Client({
 });
 
 bany.on("ready", async () => {
-  console.log(`${bany.user.tag} 에 로그인됨`);
-
   const quaary = `truncate sicboBoard`;
   await QuaryDatabaes(quaary);
+  const quaary2 = `truncate sicboBet`;
+  await QuaryDatabaes(quaary2);
 
   const sicboUpdateInterval = setInterval(() => {
     UpdateSicboGames();
@@ -35,7 +35,7 @@ bany.on("messageCreate", (msg) => {
 });
 
 bany.on("interactionCreate", async (interaction) => {
-  const { commandName, user, customId, channelId } = interaction;
+  const { commandName, nickname, customId, channelId } = interaction;
   if (interaction.isCommand()) {
     if (commandName == "회원가입") {
       await RegisterUser(interaction);

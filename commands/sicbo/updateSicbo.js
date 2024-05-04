@@ -43,6 +43,7 @@ const UpdateSicboGames = async () => {
       //대기하는 판 보여주기
     } else {
       if (state == 0) {
+        //배팅 하는 보드판
         await BoardBetting(sicboBoard, remainingTime);
       } else {
         //정산 판 보여주기
