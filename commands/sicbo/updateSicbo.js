@@ -25,6 +25,10 @@ const UpdateSicboGames = async () => {
       state = 1;
       startTime = performance.now();
       //돈 정산
+
+      dices[0] = Math.floor(Math.random() * 6 + 1);
+      dices[1] = Math.floor(Math.random() * 6 + 1);
+      dices[2] = Math.floor(Math.random() * 6 + 1);
     }
   } else {
     remainingTime = calculateTime - (performance.now() - startTime) / 1000;
@@ -52,16 +56,6 @@ const UpdateSicboGames = async () => {
       }
     }
   }
-
-  // sicboGames.forEach((sicboGame) => {
-  //   BoardBetting(sicboGame, remainingTime);
-  // });
-
-  // if (remainingTime <= 0) {
-  //   startTime = performance.now();
-  //   remainingTime = performance.now();
-  //   Settle(dices);
-  // }
 };
 
 export default UpdateSicboGames;
