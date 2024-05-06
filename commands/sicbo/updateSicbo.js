@@ -24,11 +24,13 @@ const UpdateSicboGames = async () => {
     if (remainingTime <= 0) {
       state = 1;
       startTime = performance.now();
-      //돈 정산
 
+      //주사위 굴리기
       dices[0] = Math.floor(Math.random() * 6 + 1);
       dices[1] = Math.floor(Math.random() * 6 + 1);
       dices[2] = Math.floor(Math.random() * 6 + 1);
+
+      await Settle(dices);
     }
   } else {
     remainingTime = calculateTime - (performance.now() - startTime) / 1000;

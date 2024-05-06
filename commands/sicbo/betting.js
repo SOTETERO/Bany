@@ -9,6 +9,8 @@ const Betting = async (interaction) => {
   const user_quary = `SELECT * FROM user WHERE discord_id = ${user.id}`;
   let userData = await QuaryDatabaes(user_quary);
 
+  console.log(user.id);
+
   const board_quary = `SELECT * FROM sicboBoard WHERE id = ${board_id}`;
   let boardData = await QuaryDatabaes(board_quary);
 
@@ -29,7 +31,7 @@ const Betting = async (interaction) => {
 
       if (betting.length == 0) {
         //배팅 데이터 생성
-        const insert_betting_quary = `INSERT INTO sicboBet (board_id, discord_id, nickname, bet_type, coin) values (${board_id}, '${user.id}', '${interaction.member.nickname}', ${betType} , ${boardData.stake})`;
+        const insert_betting_quary = `INSERT INTO sicboBet (board_id, discord_id, nickname, bet_type, coin, result) values (${board_id}, '${user.id}', '${interaction.member.nickname}', ${betType} , ${boardData.stake}, false)`;
         await QuaryDatabaes(insert_betting_quary);
       } else {
         //

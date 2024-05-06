@@ -1,7 +1,7 @@
 import { QuaryDatabaes } from "../mysql.js";
 
 const GetUserCoin = async (discord_id) => {
-  const quary = `SELECT Coin FROM user WHERE discord_id = ${discord_id}`;
+  const quary = `SELECT coin FROM user WHERE discord_id = '${discord_id}'`;
 
   const userData = await QuaryDatabaes(quary);
 

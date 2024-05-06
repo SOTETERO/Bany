@@ -6,7 +6,7 @@ const AddUserCoin = async (discord_id, addCoin) => {
 
   coin = coin + addCoin;
 
-  const quary = `UPDATE user SET coin = ${coin} WHERE discord_id = ${discord_id}`;
+  const quary = `UPDATE user SET coin = ${coin} WHERE discord_id = '${discord_id}'`;
 
   await QuaryDatabaes(quary);
 
