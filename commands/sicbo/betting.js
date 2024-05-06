@@ -9,8 +9,6 @@ const Betting = async (interaction) => {
   const user_quary = `SELECT * FROM user WHERE discord_id = ${user.id}`;
   let userData = await QuaryDatabaes(user_quary);
 
-  console.log(user.id);
-
   const board_quary = `SELECT * FROM sicboBoard WHERE id = ${board_id}`;
   let boardData = await QuaryDatabaes(board_quary);
 

@@ -6,7 +6,7 @@ const GetUserCoin = async (discord_id) => {
   const userData = await QuaryDatabaes(quary);
 
   if (userData.length == 1) {
-    return userData[0].Coin;
+    return userData[0].coin;
   } else {
     //유저 데이터가 없음
     return 0;
