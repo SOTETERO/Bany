@@ -1,45 +1,50 @@
-import { sicboGames } from "./sicboGame.js";
+import { QuaryDatabaes } from "../mysql.js";
 
 const Betting = async (interaction) => {
-  const { user, customId } = interaction;
+  const { user, nickname, customId } = interaction;
 
   const betType = customId.substr(9, 2);
-  const boardId = customId.substr(12);
+  const board_id = customId.substr(12);
 
-  const board = sicboGames.find((game) => game.id == boardId);
-  const userData = GetUser(user.id);
+  const user_quary = `SELECT * FROM user WHERE discord_id = ${user.id}`;
+  let userData = await QuaryDatabaes(user_quary);
 
-  if (typeof userData == "undefined") {
-    await interaction.reply(`회원가입 안됬음.`);
-    await interaction.deleteReply();
-    return;
-  }
+  const board_quary = `SELECT * FROM sicboBoard WHERE id = ${board_id}`;
+  let boardData = await QuaryDatabaes(board_quary);
 
-  if (userData.coin < board.stake) {
-    //판돈이 많은 경우
-    await interaction.reply(`돈이 부족 합니다.`);
-    await interaction.deleteReply();
+  if (userData.length == 0) {
+    //유저 없음 메시지
   } else {
-    //판돈 있는지 체크후 없으면 betting 데이터 넣기
-    let bettingInfo = board.betting.find(
-      (betting) => betting.userId === user.id && betting.type === betType
-    );
+    userData = userData[0];
+    boardData = boardData[0];
 
-    if (typeof bettingInfo == "undefined") {
-      bettingInfo = {
-        userId: user.id,
-        userData: userData,
-        type: betType,
-        betting: 0,
-      };
-      board.betting.push(bettingInfo);
+    if (userData.coin - boardData.stake >= 0) {
+      //유저 돈 차감
+      const coin = userData.coin - boardData.stake;
+      const user_update_quary = `UPDATE user SET coin = ${coin} WHERE discord_id = ${user.id}`;
+      await QuaryDatabaes(user_update_quary);
+      //배팅 데이터 확인
+      const select_bettting = `SELECT * FROM sicboBet WHERE board_id = ${board_id} AND discord_id = ${user.id} AND bet_type = ${betType}`;
+      const betting = await QuaryDatabaes(select_bettting);
+
+      if (betting.length == 0) {
+        //배팅 데이터 생성
+        const insert_betting_quary = `INSERT INTO sicboBet (board_id, discord_id, nickname, bet_type, coin, result) values (${board_id}, '${user.id}', '${interaction.member.nickname}', ${betType} , ${boardData.stake}, false)`;
+        await QuaryDatabaes(insert_betting_quary);
+      } else {
+        //
+        const betting_update_quary = `UPDATE sicboBet SET coin = ${
+          betting[0].coin + boardData.stake
+        } WHERE board_id = ${board_id} AND discord_id = '${
+          user.id
+        }' AND bet_type = ${betType}`;
+        await QuaryDatabaes(betting_update_quary);
+      }
+
+      //배팅 메시지 적기
+    } else {
+      // 돈이 없습니다.
     }
-
-    userData.coin -= board.stake;
-    bettingInfo.betting += board.stake;
-
-    await interaction.reply(`배팅합니다.`);
-    await interaction.deleteReply();
   }
 };
 

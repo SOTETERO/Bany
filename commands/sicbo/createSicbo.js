@@ -1,9 +1,7 @@
 import { DISCORD_HEADER } from "../../env.js";
-import { sicboGames } from "./sicboGame.js";
+import { QuaryDatabaes } from "../mysql.js";
 
 import axios from "axios";
-
-let sicboCount = 0;
 
 const CreateSicbo = async (interaction) => {
   const { channelId } = interaction;
@@ -18,21 +16,16 @@ const CreateSicbo = async (interaction) => {
     ],
   };
 
-  axios
-    .post(url, data, { headers: DISCORD_HEADER })
-    .then((response) => {
-      sicboCount += 1;
-      sicboGames.push({
-        id: sicboCount,
-        channelId: channelId,
-        messageId: response.data.id,
-        stake: 1000,
-        betting: [],
-      });
-    })
-    .catch((error) => {
-      console.log("Create sicbo message error");
-    });
+  try {
+    const response = await axios.post(url, data, { headers: DISCORD_HEADER });
+    const insert_quary = `INSERT INTO sicboBoard (channel_id, message_id, state, stake) values (${channelId.toString()}, ${
+      response.data.id
+    }, true, ${1000})`;
+
+    await QuaryDatabaes(insert_quary);
+  } catch (error) {
+    console.error("Create sicbo message error: ", error);
+  }
 
   await interaction.reply("다이사이");
   await interaction.deleteReply();

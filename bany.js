@@ -9,6 +9,7 @@ import { TOKEN } from "./env.js";
 import Begging from "./commands/user/begging.js";
 import BalanceInquiry from "./commands/user/balanceInquiry.js";
 import GetCoin from "./commands/user/getUserCoin.js";
+import { QuaryDatabaes } from "./commands/mysql.js";
 
 const bany = new Client({
   intents: [
@@ -18,8 +19,11 @@ const bany = new Client({
   ],
 });
 
-bany.on("ready", () => {
-  console.log(`${bany.user.tag} 에 로그인됨`);
+bany.on("ready", async () => {
+  const quaary = `truncate sicboBoard`;
+  await QuaryDatabaes(quaary);
+  const quaary2 = `truncate sicboBet`;
+  await QuaryDatabaes(quaary2);
 
   const sicboUpdateInterval = setInterval(() => {
     UpdateSicboGames();
@@ -31,7 +35,7 @@ bany.on("messageCreate", (msg) => {
 });
 
 bany.on("interactionCreate", async (interaction) => {
-  const { commandName, user, customId, channelId } = interaction;
+  const { commandName, nickname, customId, channelId } = interaction;
   if (interaction.isCommand()) {
     if (commandName == "회원가입") {
       await RegisterUser(interaction);
