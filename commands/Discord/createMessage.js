@@ -1,7 +1,7 @@
 import { DISCORD_HEADER } from "../../env.js";
 import axios from "axios";
 
-const DiscordMessage = (channel_id, message) => {
+const CreateMessage = (channel_id, message) => {
   const url = `https://discord.com/api/v10/channels/${channel_id}/messages`;
 
   const data = {
@@ -17,4 +17,4 @@ const DiscordMessage = (channel_id, message) => {
   axios.post(url, data, { headers: DISCORD_HEADER });
 };
 
-export default DiscordMessage;
+export default CreateMessage;

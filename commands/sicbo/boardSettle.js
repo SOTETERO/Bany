@@ -207,8 +207,9 @@ const BoardSettle = async (sicboGame, dices, remainingTime) => {
   const data = {
     embeds: [
       {
-        title: `------------:game_die: 다이사이 :game_die: ${dices[0]} ${dices[1]} ${dices[2]}------------`,
-        description: "```asciidoc\n💵Settle💵\n``` ",
+        title: `----------:game_die: 주사위 게임 :game_die:----------`,
+        description: `\`\`\`\n┌───┐ ┌───┐ ┌───┐  DICE : ${dices[0]} ${dices[1]} ${dices[2]}\n│ ${dices[0]} │ │ ${dices[1]} │ │ ${dices[2]} │\n└───┘ └───┘ └───┘  SUM : ${sum}\`\`\``,
+
         fields: [
           {
             name: `홀`,
