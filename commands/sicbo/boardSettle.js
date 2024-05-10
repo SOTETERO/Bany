@@ -2,7 +2,6 @@ import axios from "axios";
 import { BetType } from "./betType.js";
 import { DISCORD_HEADER } from "../../env.js";
 import { QuaryDatabaes } from "../mysql.js";
-import Settle from "./Settle.js";
 
 const BoardSettle = async (sicboGame, dices, remainingTime) => {
   const { id, channel_id, message_id } = sicboGame;
@@ -18,6 +17,8 @@ const BoardSettle = async (sicboGame, dices, remainingTime) => {
 
   const bet_quary = `SELECT * FROM sicboBet WHERE board_id = ${id}`;
   const bets = await QuaryDatabaes(bet_quary);
+
+  results = [];
 
   bets.forEach((bet) => {
     const type = bet.bet_type.toString().padStart(2, "0");
@@ -204,11 +205,39 @@ const BoardSettle = async (sicboGame, dices, remainingTime) => {
     sum_value = "```diff\n" + sum_value + "```";
   }
 
+  let des = "```diff\n";
+  des += "+ 방장 1000 => 2000(29000)\n";
+  des += "= 방장 1000 => 2000(29000)\n";
+  des += "- 방장 1000 => 2000(29000)\n";
+  des += "+ 방장 1000 => 2000(29000)\n";
+  des += "+ 방장 1000 => 2000(29000)\n";
+  des += "= 방장 1000 => 2000(29000)\n";
+  des += "- 방장 1000 => 2000(29000)\n";
+  des += "+ 방장 1000 => 2000(29000)\n";
+  des += "+ 방장 1000 => 2000(29000)\n";
+  des += "= 방장 1000 => 2000(29000)\n";
+  des += "- 방장 1000 => 2000(29000)\n";
+  des += "+ 방장 1000 => 2000(29000)\n";
+  des += "+ 방장 1000 => 2000(29000)\n";
+  des += "= 방장 1000 => 2000(29000)\n";
+  des += "- 방장 1000 => 2000(29000)\n";
+  des += "+ 방장 1000 => 2000(29000)\n";
+  des += "+ 방장 1000 => 2000(29000)\n";
+  des += "= 방장 1000 => 2000(29000)\n";
+  des += "- 방장 1000 => 2000(29000)\n";
+  des += "+ 방장 1000 => 2000(29000)\n";
+  des += "+ 방장 1000 => 2000(29000)\n";
+  des += "= 방장 1000 => 2000(29000)\n";
+  des += "- 방장 1000 => 2000(29000)\n";
+  des += "+ 방장 1000 => 2000(29000)\n";
+  des += "\n";
+  des += `┌───┐ ┌───┐ ┌───┐  DICE : ${dices[0]} ${dices[1]} ${dices[2]}\n│ ${dices[0]} │ │ ${dices[1]} │ │ ${dices[2]} │\n└───┘ └───┘ └───┘  SUM : ${sum}`;
+  des += "```";
   const data = {
     embeds: [
       {
-        title: `------------:game_die: 다이사이 :game_die: ${dices[0]} ${dices[1]} ${dices[2]}------------`,
-        description: "```asciidoc\n💵Settle💵\n``` ",
+        title: `----------:game_die: 주사위 게임 :game_die:----------`,
+        description: des,
         fields: [
           {
             name: `홀`,

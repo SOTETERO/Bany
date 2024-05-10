@@ -8,7 +8,6 @@ const Settle = async (dices) => {
 
   const select_bet_quary = "select * from sicboBet";
   const bets = await QuaryDatabaes(select_bet_quary);
-  console.log(bets);
 
   for (let i = 0; i < bets.length; i++) {
     const bet = bets[i];
@@ -18,6 +17,7 @@ const Settle = async (dices) => {
     const coin = bet.coin;
 
     let getCoin = 0;
+
     switch (bet_type) {
       case BetType.ODD:
         if (sum % 2 != 0) getCoin += coin * 2;

@@ -10,7 +10,7 @@ import Begging from "./commands/user/begging.js";
 import BalanceInquiry from "./commands/user/balanceInquiry.js";
 import GetCoin from "./commands/user/getUserCoin.js";
 import { QuaryDatabaes } from "./commands/mysql.js";
-import DiscordMessage from "./commands/Discord/discordMessage.js";
+import DiscordMessage from "./commands/Discord/createMessage.js";
 
 const bany = new Client({
   intents: [
@@ -29,8 +29,6 @@ bany.on("ready", async () => {
   const sicboUpdateInterval = setInterval(() => {
     UpdateSicboGames();
   }, 1000);
-
-  DiscordMessage("1229377844908396577", "하이");
 });
 
 bany.on("messageCreate", (msg) => {
