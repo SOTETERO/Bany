@@ -1,6 +1,6 @@
 import { Client, GatewayIntentBits, User } from "discord.js";
 
-import CreateDiceGame from "./Command/DiceGame/CreateDiceGame.js";
+import CreateDiceBoard from "./Command/DiceGame/createDiceBoard.js";
 import UpdateSicboGames from "./Command/DiceGame/updateSicbo.js";
 import Betting from "./Command/DiceGame/betting.js";
 import RegisterUser from "./Command/user/registerUser.js";
@@ -45,7 +45,7 @@ bany.on("interactionCreate", async (interaction) => {
     } else if (commandName == "잔액조회") {
       await BalanceInquiry(interaction);
     } else if (commandName == "다이사이") {
-      await CreateDiceGame(interaction);
+      await CreateDiceBoard(interaction);
     }
   } else if (interaction.isButton()) {
     if ("sicboBet" == customId.substr(0, 8)) {
