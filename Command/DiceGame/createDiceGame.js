@@ -3,7 +3,7 @@ import { QuaryDatabaes } from "../mysql.js";
 
 import axios from "axios";
 
-const CreateSicbo = async (interaction) => {
+const CreateDiceGame = async (interaction) => {
   const { channelId } = interaction;
 
   const url = `https://discord.com/api/v10/channels/${channelId}/messages`;
@@ -30,4 +30,4 @@ const CreateSicbo = async (interaction) => {
   await interaction.reply("다이사이");
   await interaction.deleteReply();
 };
-export default CreateSicbo;
+export default CreateDiceGame;

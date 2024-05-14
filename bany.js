@@ -1,16 +1,14 @@
 import { Client, GatewayIntentBits, User } from "discord.js";
 
-import CreateSicbo from "./commands/sicbo/createSicbo.js";
-import UpdateSicboGames from "./commands/sicbo/updateSicbo.js";
-import Betting from "./commands/sicbo/betting.js";
-import RegisterUser from "./commands/user/registerUser.js";
-import AttendanceUser from "./commands/user/attendanceUser.js";
+import CreateDiceGame from "./Command/DiceGame/CreateDiceGame.js";
+import UpdateSicboGames from "./Command/DiceGame/updateSicbo.js";
+import Betting from "./Command/DiceGame/betting.js";
+import RegisterUser from "./Command/user/registerUser.js";
+import AttendanceUser from "./Command/user/attendanceUser.js";
 import { TOKEN } from "./env.js";
-import Begging from "./commands/user/begging.js";
-import BalanceInquiry from "./commands/user/balanceInquiry.js";
-import GetCoin from "./commands/user/getUserCoin.js";
-import { QuaryDatabaes } from "./commands/mysql.js";
-import DiscordMessage from "./commands/Discord/createMessage.js";
+import Begging from "./Command/user/begging.js";
+import BalanceInquiry from "./Command/user/balanceInquiry.js";
+import { QuaryDatabaes } from "./Command/mysql.js";
 
 const bany = new Client({
   intents: [
@@ -47,7 +45,7 @@ bany.on("interactionCreate", async (interaction) => {
     } else if (commandName == "잔액조회") {
       await BalanceInquiry(interaction);
     } else if (commandName == "다이사이") {
-      await CreateSicbo(interaction);
+      await CreateDiceGame(interaction);
     }
   } else if (interaction.isButton()) {
     if ("sicboBet" == customId.substr(0, 8)) {
