@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { DISCORD_HEADER } from "../../env.js";
-import { diceBoard as diceBoards } from "./DiceBoard.js";
+import { diceBoards } from "./DiceBoard.js";
 import { BetType } from "./betType.js";
 
 const CreateDiceBoard = async (interaction) => {

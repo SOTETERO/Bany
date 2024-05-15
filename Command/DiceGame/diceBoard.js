@@ -1,4 +1,4 @@
-export const diceBoard = [];
+export const diceBoards = [];
 
 //board_id              보드 아이디
 //channel_id            디스코드 채널 아이디
