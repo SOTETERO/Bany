@@ -48,7 +48,7 @@ bany.on("interactionCreate", async (interaction) => {
       await CreateDiceBoard(interaction);
     }
   } else if (interaction.isButton()) {
-    if ("sicboBet" == customId.substr(0, 8)) {
+    if ("DiceGameBet" == customId.substr(0, 11)) {
       await Betting(interaction);
     }
   }
