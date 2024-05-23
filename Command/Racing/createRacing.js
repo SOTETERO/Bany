@@ -50,6 +50,7 @@ const CreateRacing = async (interaction) => {
     id: id,
     message: message,
     horses: [0, 0, 0, 0, 0],
+    rank: [],
     stake: 1000,
     bets: [],
     results: [],

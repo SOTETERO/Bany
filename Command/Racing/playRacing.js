@@ -1,7 +1,7 @@
 import { EmbedBuilder } from "discord.js";
 
 const PlayRacing = async (racing) => {
-  const { id, message, horses } = racing;
+  const { message, horses } = racing;
 
   let stadium = "";
 
