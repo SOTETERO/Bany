@@ -10,6 +10,7 @@ import Begging from "./Command/user/begging.js";
 import BalanceInquiry from "./Command/user/balanceInquiry.js";
 import { QuaryDatabaes } from "./Command/mysql.js";
 import CreateRacing from "./Command/Racing/createRacing.js";
+import UpdateRacings from "./Command/Racing/updateRacings.js";
 
 const bany = new Client({
   intents: [
@@ -27,6 +28,10 @@ bany.on("ready", async () => {
 
   const sicboUpdateInterval = setInterval(() => {
     UpdateSicboGames();
+  }, 1000);
+
+  setInterval(() => {
+    UpdateRacings();
   }, 1000);
 });
 

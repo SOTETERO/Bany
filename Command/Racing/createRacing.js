@@ -13,28 +13,28 @@ const CreateRacing = async (interaction) => {
   await interaction.deleteReply();
 
   const { channel } = interaction;
-  const board_id = racings.length;
+  const id = racings.length;
 
   const embed = new EmbedBuilder().setTitle("경마장 생성");
   const buttons = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
-      .setCustomId(`${Command.RACING_BET1}_${board_id}`)
+      .setCustomId(`${Command.RACING_BET1}_${id}`)
       .setLabel("1")
       .setStyle(ButtonStyle.Primary),
     new ButtonBuilder()
-      .setCustomId(`${Command.RACING_BET2}_${board_id}`)
+      .setCustomId(`${Command.RACING_BET2}_${id}`)
       .setLabel("2")
       .setStyle(ButtonStyle.Primary),
     new ButtonBuilder()
-      .setCustomId(`${Command.RACING_BET3}_${board_id}`)
+      .setCustomId(`${Command.RACING_BET3}_${id}`)
       .setLabel("3")
       .setStyle(ButtonStyle.Primary),
     new ButtonBuilder()
-      .setCustomId(`${Command.RACING_BET4}_${board_id}`)
+      .setCustomId(`${Command.RACING_BET4}_${id}`)
       .setLabel("4")
       .setStyle(ButtonStyle.Primary),
     new ButtonBuilder()
-      .setCustomId(`${Command.RACING_BET5}_${board_id}`)
+      .setCustomId(`${Command.RACING_BET5}_${id}`)
       .setLabel("5")
       .setStyle(ButtonStyle.Primary)
   );
@@ -47,8 +47,9 @@ const CreateRacing = async (interaction) => {
   const message = await channel.send(data);
 
   racings.push({
-    id: board_id,
+    id: id,
     message: message,
+    horses: [0, 0, 0, 0, 0],
     stake: 1000,
     bets: [],
     results: [],
