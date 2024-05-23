@@ -29,7 +29,7 @@ const Betting = async (interaction) => {
       const user_update_quary = `UPDATE user SET coin = ${coin} WHERE discord_id = ${user.id}`;
       await QuaryDatabaes(user_update_quary);
       //배팅 데이터 확인
-      board.bets.find(bet => bet.board == && bet.type == );
+      //      board.bets.find(bet => bet.board == && bet.type == );
       //     const select_bettting = `SELECT * FROM sicboBet WHERE board_id = ${board_id} AND discord_id = ${user.id} AND bet_type = ${betType}`;
       //     const betting = await QuaryDatabaes(select_bettting);
       //     if (betting.length == 0) {
