@@ -1,0 +1,7 @@
+export const Command = {
+  RACING_BET1: "00001",
+  RACING_BET2: "00002",
+  RACING_BET3: "00003",
+  RACING_BET4: "00004",
+  RACING_BET5: "00005",
+};

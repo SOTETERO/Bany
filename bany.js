@@ -9,6 +9,7 @@ import { TOKEN } from "./env.js";
 import Begging from "./Command/user/begging.js";
 import BalanceInquiry from "./Command/user/balanceInquiry.js";
 import { QuaryDatabaes } from "./Command/mysql.js";
+import CreateRacing from "./Command/Racing/createRacing.js";
 
 const bany = new Client({
   intents: [
@@ -46,6 +47,8 @@ bany.on("interactionCreate", async (interaction) => {
       await BalanceInquiry(interaction);
     } else if (commandName == "다이사이") {
       await CreateDiceBoard(interaction);
+    } else if (commandName == "경마장") {
+      await CreateRacing(interaction);
     }
   } else if (interaction.isButton()) {
     if ("DiceGameBet" == customId.substr(0, 11)) {
