@@ -10,6 +10,7 @@ import Begging from "./Command/user/begging.js";
 import BalanceInquiry from "./Command/user/balanceInquiry.js";
 import { QuaryDatabaes } from "./Command/mysql.js";
 import CreateRacing from "./Command/Racing/createRacing.js";
+import ResetGlobalCommands from "./Command/Command/resetGlobalCommands.js";
 
 const bany = new Client({
   intents: [
@@ -20,6 +21,8 @@ const bany = new Client({
 });
 
 bany.on("ready", async () => {
+  await ResetGlobalCommands();
+
   const quaary = `truncate sicboBoard`;
   await QuaryDatabaes(quaary);
   const quaary2 = `truncate sicboBet`;
